@@ -255,7 +255,7 @@ begin
             MinGWGetLog:=GetMinGWGetLog;
             if Length(MinGWGetLog)>0 then begin
                 PowerShell:=ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe');
-                Exec(PowerShell,'"'+MinGWGet+' install '+Packages+' 2>&1 | %{ \"$_\" } | tee '+MinGWGetLog+'"','',SW_SHOW,ewWaitUntilTerminated,ResultCode);
+                Exec(PowerShell,'"'+MinGWGet+' install '+Packages+' 2>&1 | %{ \"$_\" } | tee-object -variable log ; out-file '+MinGWGetLog+' -encoding ascii -inputobject $log"','',SW_SHOW,ewWaitUntilTerminated,ResultCode);
             end else begin
                 Exec(MinGWGet,'install '+Packages,'',SW_SHOW,ewWaitUntilTerminated,ResultCode);
             end;
